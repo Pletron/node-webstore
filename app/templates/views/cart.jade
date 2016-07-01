@@ -1,0 +1,31 @@
+extends ../layouts/default
+
+
+mixin item(item)
+	.list-group-item
+		a(href='/product/' + item.product.slug)
+			h4.list-group-item-title #{item.product.title} – 
+				span #{item.product.price}€
+		.list-group-item-controls
+			.input-group.col-md-3
+				span.input-group-addon qty
+				input(type="number", name="quantity"+item.key, value=item.quantity).form-control
+				.input-group-btn
+					button(type="submit", name="updatedItem", value=item.key).btn.btn-primary
+						span.glyphicon.glyphicon-refresh
+							button(type="submit", name="removedItem", value=item.key).btn.btn-danger
+								span.glyphicon.glyphicon-remove
+
+
+block content
+	.container
+		form(method="post")
+			input(type="hidden", name="action", value="update-cart")
+			.list-group
+				each item in data.items
+					+item(item)
+
+		h4 Total Cost <b>#{data.cost}</b>
+		form(method="post")
+			input(type="hidden", name="action", value="delete-cart")
+			button(type="submit").btn.btn-danger Delete cart
