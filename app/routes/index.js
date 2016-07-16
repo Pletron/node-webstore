@@ -29,6 +29,7 @@ keystone.pre('render', middleware.flashMessages);
 // Import Route Controllers
 var routes = {
 	views: importRoutes('./views'),
+	api: importRoutes('./api'),
 };
 
 // Setup Route Bindings
@@ -39,15 +40,39 @@ exports = module.exports = function (app) {
 	app.get('/blog/post/:post', routes.views.post);
 	app.get('/gallery', routes.views.gallery);
 	app.all('/contact', routes.views.contact);
+	
+	app.get('/shop', routes.views.shop);
 
-	app.get('/shop/:category?', routes.views.shop);
-	app.post('/shop/:category?', routes.views.shop);
-	app.get('/product/:product', routes.views.product);
-	app.post('/product/:product', routes.views.product);
 
-	app.all('/cart/:id?', routes.views.cart);
 
-	// NOTE: To protect a route so that only admins can see it, use the requireUser middleware:
-	// app.get('/protected', middleware.requireUser, routes.views.protected);
+
+
+	// API
+
+	app.put('/api/cart/init/:shipping/:taxRate', keystone.middleware.api, routes.api.cart.init);
+	app.get('/api/cart/:id', keystone.middleware.api, routes.api.cart.getCart);
+	app.put('/api/cart/:id/additem/:product/:size/:quantity', keystone.middleware.api, routes.api.cart.addItem);
+	app.put('/api/cart/:id/updateitem/:product/:size/:quantity', keystone.middleware.api, routes.api.cart.updateItem);
+	app.delete('/api/cart/:id/:product/:size', keystone.middleware.api, routes.api.cart.removeItem);
+	app.delete('/api/cart/:id', keystone.middleware.api, routes.api.cart.delete);
+
+
+	app.get('/api/product/list/:category?', keystone.middleware.api, routes.api.product.list);
+	app.get('/api/product/:slug', keystone.middleware.api, routes.api.product.get);
+
+
+	// app.put('/api/cart/', keystone.middleware.api, routes.api.cart.newCart);
+	// app.get('/api/cart/:id', keystone.middleware.api, routes.api.cart.get);
+
+	// // app.get('/api/cart/:id', keystone.middleware.api, routes.api.cart.get);
+	// // app.put('/api/cart/', keystone.middleware.api, routes.api.cart.newCart);
+	// app.put('/api/cart/:id/additem/:product/:size/:quantity?', keystone.middleware.api, routes.api.cart.addItem);
+	// // app.put('/api/cart/:id/update/:product/:size/:quantity', keystone.middleware.api, routes.api.cart.updateItem);
+	// app.delete('/api/cart/:id', keystone.middleware.api, routes.api.cart.delete);
+	// // app.delete('/api/cart/:id/:product', keystone.middleware.api, routes.api.cart.removeItem);
+	
+
+	// // NOTE: To protect a route so that only admins can see it, use the requireUser middleware:
+	// // app.get('/protected', middleware.requireUser, routes.views.protected);
 
 };

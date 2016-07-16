@@ -10,19 +10,25 @@ var User = new keystone.List('User');
 User.add({
     name: {
         type: Types.Name,
-        required: true,
-        index: true
+        index: true,
+        dependsOn: {
+            isGuest: false
+        }
     },
     email: {
         type: Types.Email,
         initial: true,
-        required: true,
-        index: true
+        index: true,
+        dependsOn: {
+            isGuest: false
+        }
     },
     password: {
         type: Types.Password,
         initial: true,
-        required: true,
+        dependsOn: {
+            isGuest: false
+        },
         default: function() {
         	return Math.random().toString(36).slice(-8);
         }
@@ -59,6 +65,11 @@ User.relationship({
     ref: 'Post',
     path: 'posts',
     refPath: 'author'
+});
+User.relationship({
+    ref: 'Cart',
+    path: 'carts',
+    refPath: 'customer'
 });
 
 

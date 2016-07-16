@@ -1,42 +1,16 @@
 extends ../layouts/default
 
 
-mixin product(product)
-	.col-sm-6.col-md-4
-		.thumbnail
-			.caption
-				h3
-					a(href='/product/' + product.slug) #{product.title}
-				h5 #{product.price}€
-				form(method="post")
-					input(type="hidden", name="product_slug", value="#{product.slug}")
-					button(type="submit", name="action", value="add-to-cart").btn.btn-primary Add to cart
-		
-
 
 block content
 	.container
-		nav.navbar.navbar-inverse
-			ul.nav.navbar-nav
-				if !data.category
-					li
-						a(href='/shop/' role="button") All
-				else
-					li
-						a(href='/shop/' role="button") All
-				each category in data.categories
-					if data.category
-						if category.name == data.category.name
-							li.active
-								a(href='/shop/' + category.key role="button") #{category.name}
-						else
-							li
-								a(href='/shop/' + category.key role="button") #{category.name}
-					else
-						li
-							a(href='/shop/' + category.key role="button") #{category.name}
-
-				
-		.row
-			each product in data.products.results
-				+product(product)
+		ul(ng-repeat='product in products')
+			li
+				h4 {{product.title}}
+				p {{product.price}}
+				ngcart-addtocart(id="{{product.slug}}" name="{{product.title}}" price="{{product.price}}" quantity="1" quantity-max="5" size="product.sizes") Add to Cart
+				//- | {{product.title}}
+				//- a(ng-click="addToCart(product.slug, 1, size)").btn.btn-sm.btn-primary Add to cart
+				//- select(name="sizes" ng-model="size" ng-options="v for v in product.sizes" required)
+				//- 	option(value="" selected hidden)
+		ngcart-cart

@@ -13,13 +13,19 @@ var CartItem = new keystone.List('CartItem', {
         unique: true
     },
     hidden: true,
+    nocreate: true
 });
 
 CartItem.add({
     product: {
         type: Types.Relationship,
         ref: 'Product',
-        many: false
+        many: false,
+        required: true
+    },
+    size: {
+        type: String,
+        required: true
     },
     quantity: {
         type: Types.Number,

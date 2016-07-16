@@ -38,6 +38,19 @@ Product.add({
             height: 400
         },
     },
+    gender: {
+        type: Types.Select,
+        options: [
+            'male',
+            'female'
+        ],
+        initial: true
+    },
+    sizes: {
+        type: Types.TextArray,
+        initial: true,
+        default: ['']
+    },
     price: {
         type: Types.Money,
         format: '0,0.00€',

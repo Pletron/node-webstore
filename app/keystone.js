@@ -10,8 +10,8 @@ var keystone = require('keystone');
 // and documentation.
 
 keystone.init({
-	'name': 'FLYN',
-	'brand': 'FLYN',
+	'name': 'FLYN Wetsuits',
+	'brand': 'FLYN Wetsuits',
 
 	'sass': 'public',
 	'static': 'public',
@@ -23,8 +23,6 @@ keystone.init({
 	'session': true,
 	'auth': true,
 	'user model': 'User',
-
-	'cookie secret': 'e2G2XjqLSQLtsbcYm2sfC3S3j6zS8S'
 });
 
 // Load your project's Models
@@ -51,6 +49,7 @@ keystone.set('nav', {
 	users: 'users',
 	shop: ['products', 'product-categories'],
 });
+
 
 // Start Keystone to connect to your database and initialise the web server
 

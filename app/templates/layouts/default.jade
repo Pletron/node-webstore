@@ -9,7 +9,7 @@ html
 		meta(name="viewport", content="width=device-width, initial-scale=1.0")
 		meta(http-equiv="X-UA-Compatible" content="IE=edge")
 
-		title= title || 'FLYN'
+		title= title || 'FLYN Wetsuits'
 		link(rel="shortcut icon", href="/favicon.ico", type="image/x-icon")
 
 		//- Customise the stylesheet for your site by editing /public/styles/site.sass
@@ -33,7 +33,7 @@ html
 		block head
 
 	//- HTML BODY
-	body
+	body(ng-app="shop" ng-controller="shopCtrl")
 
 		//- HEADER
 		#header: .container
@@ -49,20 +49,13 @@ html
 							span.icon-bar
 							span.icon-bar
 							span.icon-bar
-						a.navbar-brand(href='/') FLYN
+						a.navbar-brand(href='/') FLYN Wetsuits
 					.collapse.navbar-collapse
 						ul.nav.navbar-nav.navbar-left
 							each link in navLinks
 								li(class=(section == link.key ? 'active' : null)): a(href=link.href)= link.label
 						ul.nav.navbar-nav.navbar-right
-							if cartItems
-								li 
-									a(href='/cart')
-										span.badge #{cartItems}
-										span.glyphicon.glyphicon-shopping-cart
-							else
-								li
-									a(href='/cart').glyphicon.glyphicon-shopping-cart
+							ngcart-summary
 							if user
 								if user.canAccessKeystone
 									li: a(href='/keystone') Open Keystone
@@ -105,6 +98,18 @@ html
 		//- Customise which Bootstrap javascript files are served by including
 		//- them specifically here, instead of bootstrap-3.3.5.min.js
 		script(src='/js/bootstrap/bootstrap-3.3.5.min.js')
+
+		//- Customise which Bootstrap javascript files are served by including
+		//- them specifically here, instead of cart.js
+		script(src='/bower_components/angular/angular.min.js')
+		script(src='/bower_components/angular-cookies/angular-cookies.min.js')
+
+		script(src='/bower_components/underscore/underscore-min.js')
+
+		//- Customise which Bootstrap javascript files are served by including
+		//- them specifically here, instead of cart.js
+		script(src='/js/cart/cart.js')
+		script(src='/js/app.js')
 
 		//- The KeystoneJS Content Editor provides support for ks-editable data attributes,
 		//- which generate links to edit content for users who can access Keystone

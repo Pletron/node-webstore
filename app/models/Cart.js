@@ -41,6 +41,22 @@ Cart.add({
         default: 0,
         required: true
     },
+    taxRate: {
+        type: Types.Number,
+        default: 23
+    },
+    tax: {
+        type: Types.Money,
+        format: '0,0.00€',
+        default: 0,
+        required: true
+    },
+    shipping: {
+        type: Types.Money,
+        format: '0,0.00€',
+        default: 0,
+        required: true
+    }
 });
 
 
@@ -76,6 +92,7 @@ Cart.schema.pre('update', function(next) {
                     _.each(items, function(item) {
                         cost += item.product.price * item.quantity;
                     });
+                    cart.tax = cost*(cart.taxRate/100);
                     cart.cost = cost;
                     cart.save(next);
                 });
