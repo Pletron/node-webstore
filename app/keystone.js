@@ -10,8 +10,8 @@ var keystone = require('keystone');
 // and documentation.
 
 keystone.init({
-	'name': 'FLYN Wetsuits',
-	'brand': 'FLYN Wetsuits',
+	'name': '',
+	'brand': '',
 
 	'sass': 'public',
 	'static': 'public',
